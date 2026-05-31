@@ -3,6 +3,11 @@ extends CharacterBody2D
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var stun_timer: Timer = $StunTimer
 
+#abilities
+@export var acquired_dash = false
+@export var acquired_double_jump = false
+@export var acquired_wall_jump = false
+
 const SPEED = 200
 const JUMP_VELOCITY = -300
 const GRAVITY = 700
@@ -30,8 +35,9 @@ func _physics_process(delta: float) -> void:
 	if !stun:# Add the gravity.
 		if is_on_floor() or is_on_wall():
 			has_air_dashed = false
-			can_double_jump = true
-			has_double_jumped = false
+			if acquired_wall_jump:
+				can_double_jump = true
+				has_double_jumped = false
 			#can_dash = true
 			#dash_cooldown_timer = 0.0
 		
@@ -61,7 +67,8 @@ func _physics_process(delta: float) -> void:
 			
 		if not is_on_floor():
 			if is_on_wall() and velocity.y > 0:
-				velocity.y += WALL_SLIDE_GRAVITY * delta
+				if acquired_wall_jump:
+					velocity.y += WALL_SLIDE_GRAVITY * delta
 			else:
 				velocity.y += GRAVITY * delta
 
@@ -71,41 +78,47 @@ func _physics_process(delta: float) -> void:
 			can_double_jump = true
 			has_double_jumped = false
 		
-		if Input.is_action_just_pressed("jump") and is_on_wall():
-			velocity.y = JUMP_VELOCITY
-			velocity.x = WALL_JUMP_FORCE * get_wall_normal().x
-			can_double_jump = true
-			has_double_jumped = false
-			stun = true
-			stun_timer.start()
+		if acquired_wall_jump:
+			if Input.is_action_just_pressed("jump") and is_on_wall():
+				velocity.y = JUMP_VELOCITY
+				velocity.x = WALL_JUMP_FORCE * get_wall_normal().x
+				can_double_jump = true
+				has_double_jumped = false
+				stun = true
+				stun_timer.start()
 		
-		if Input.is_action_just_pressed("jump") \
-		and not is_on_floor()\
-		and not is_on_wall()\
-		and can_double_jump\
-		and not has_double_jumped:
-			velocity.y = JUMP_VELOCITY
-			has_double_jumped = true
-			
-			
-		if Input.is_action_just_pressed("dash") and can_dash:
-			if not is_on_floor():
-				if has_air_dashed:
-					return
+		if acquired_double_jump:
+			if Input.is_action_just_pressed("jump") \
+			and not is_on_floor()\
+			and can_double_jump\
+			and not has_double_jumped:
+				if acquired_wall_jump:
+					if not is_on_wall():
+						velocity.y = JUMP_VELOCITY
+						has_double_jumped = true
 				else:
-					has_air_dashed = true
-					
-			is_dashing = true
-			dash_timer = DASH_DURATION
-			can_dash = false
+					velocity.y = JUMP_VELOCITY
+					has_double_jumped = true
 			
-			if direction != 0:
-				dash_direction = direction
-			else:
-				dash_direction = last_direction
-				
-			velocity.x = dash_direction * DASH_SPEED
-			velocity.y = 0
+		if acquired_dash:
+			if Input.is_action_just_pressed("dash") and can_dash:
+				if not is_on_floor():
+					if has_air_dashed:
+						return
+					else:
+						has_air_dashed = true
+					
+				is_dashing = true
+				dash_timer = DASH_DURATION
+				can_dash = false
+			
+				if direction != 0:
+					dash_direction = direction
+				else:
+					dash_direction = last_direction
+					
+				velocity.x = dash_direction * DASH_SPEED
+				velocity.y = 0
 	
 	
 	update_animation()
@@ -125,7 +138,13 @@ func update_animation():
 			animated_sprite_2d.play("idle")
 			
 	if velocity.y:
-		animated_sprite_2d.play("jump")
+		if is_on_wall() and acquired_wall_jump:
+			animated_sprite_2d.play("climb")
+		else:
+			animated_sprite_2d.play("jump")
+	
+			
+	
 	
 	if is_dashing:
 		animated_sprite_2d.play("dash")
