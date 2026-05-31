@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+class_name Player
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var stun_timer: Timer = $StunTimer
 
@@ -8,8 +8,8 @@ extends CharacterBody2D
 @export var acquired_double_jump = false
 @export var acquired_wall_jump = false
 
-const SPEED = 200
-const JUMP_VELOCITY = -300
+const SPEED = 150
+const JUMP_VELOCITY = -250
 const GRAVITY = 700
 const WALL_SLIDE_GRAVITY = 300
 const WALL_JUMP_FORCE = 300

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bf7ki2m1icw2n"]
+
+[ext_resource type="Script" uid="uid://bqxy3gxq84q35" path="res://scenes/dna_arrows.gd" id="1_73s6j"]
+[ext_resource type="Texture2D" uid="uid://dc7uf42pgmrq6" path="res://assets/dnaarrows.png" id="1_iehyf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ft32a"]
+
+[node name="DnaArrows" type="Area2D" unique_id=1063041865]
+script = ExtResource("1_73s6j")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1728037373]
+texture = ExtResource("1_iehyf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1999307661]
+position = Vector2(-1, -2)
+shape = SubResource("RectangleShape2D_ft32a")
+
+[node name="Label" type="Label" parent="." unique_id=2102761570]
+visible = false
+texture_filter = 1
+offset_left = -95.0
+offset_top = -74.0
+offset_right = 121.0
+offset_bottom = -25.0
+text = "FEET MUTATION! 
+DOUBLE JUMP ACQUIRED!"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

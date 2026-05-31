@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dw1fxhx26xsxj"]
+
+[ext_resource type="Texture2D" uid="uid://dliyvroyrt0fi" path="res://assets/clawdna.png" id="1_i8g1v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ft32a"]
+
+[node name="DnaClaw" type="Area2D" unique_id=1063041865]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1728037373]
+texture = ExtResource("1_i8g1v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1999307661]
+position = Vector2(-1, -2)
+shape = SubResource("RectangleShape2D_ft32a")

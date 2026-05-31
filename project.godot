@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="become_a_superhuman!"
-run/main_scene="uid://dq5mmhljav3qa"
+run/main_scene="uid://broks2v04uvqi"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
