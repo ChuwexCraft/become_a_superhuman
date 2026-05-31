@@ -25,6 +25,7 @@ var has_air_dashed : bool = false
 var can_double_jump : bool = true
 var has_double_jumped: bool = false
 
+var last_direction = 1
 func _physics_process(delta: float) -> void:
 	if !stun:# Add the gravity.
 		if is_on_floor() or is_on_wall():
@@ -51,6 +52,8 @@ func _physics_process(delta: float) -> void:
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with custom gameplay actions.
 		var direction := Input.get_axis("left", "right")
+		if direction != 0:
+			last_direction = direction
 		if direction:
 			velocity.x = direction * SPEED
 		else:
@@ -99,7 +102,7 @@ func _physics_process(delta: float) -> void:
 			if direction != 0:
 				dash_direction = direction
 			else:
-				dash_direction = 1
+				dash_direction = last_direction
 				
 			velocity.x = dash_direction * DASH_SPEED
 			velocity.y = 0
@@ -121,10 +124,8 @@ func update_animation():
 		else:
 			animated_sprite_2d.play("idle")
 			
-	if velocity.y < 0:
+	if velocity.y:
 		animated_sprite_2d.play("jump")
-	if velocity.y > 0:
-		animated_sprite_2d.play("fall")
 	
 	if is_dashing:
 		animated_sprite_2d.play("dash")
