@@ -211,6 +211,10 @@ shape = SubResource("CapsuleShape2D_qfm1y")
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=2054085232]
 zoom = Vector2(2, 2)
 
+[node name="StunTimer" type="Timer" parent="CharacterBody2D" unique_id=1546648050]
+wait_time = 0.1
+one_shot = true
+
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1671542797]
 position = Vector2(546, 335)
 
@@ -249,3 +253,5 @@ position = Vector2(-104.00006, 376)
 rotation = -1.5707964
 scale = Vector2(1.4972416, 1)
 texture = ExtResource("3_qhqgy")
+
+[connection signal="timeout" from="CharacterBody2D/StunTimer" to="CharacterBody2D" method="_on_stun_timer_timeout"]
