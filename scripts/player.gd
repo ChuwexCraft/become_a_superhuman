@@ -22,10 +22,15 @@ var can_dash : bool = true
 var dash_direction :int = 0
 var has_air_dashed : bool = false
 
+var can_double_jump : bool = true
+var has_double_jumped: bool = false
+
 func _physics_process(delta: float) -> void:
 	if !stun:# Add the gravity.
 		if is_on_floor() or is_on_wall():
 			has_air_dashed = false
+			can_double_jump = true
+			has_double_jumped = false
 			#can_dash = true
 			#dash_cooldown_timer = 0.0
 		
@@ -60,12 +65,25 @@ func _physics_process(delta: float) -> void:
 		# Handle jump.
 		if Input.is_action_just_pressed("jump") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
+			can_double_jump = true
+			has_double_jumped = false
 		
 		if Input.is_action_just_pressed("jump") and is_on_wall():
 			velocity.y = JUMP_VELOCITY
 			velocity.x = WALL_JUMP_FORCE * get_wall_normal().x
+			can_double_jump = true
+			has_double_jumped = false
 			stun = true
 			stun_timer.start()
+		
+		if Input.is_action_just_pressed("jump") \
+		and not is_on_floor()\
+		and not is_on_wall()\
+		and can_double_jump\
+		and not has_double_jumped:
+			velocity.y = JUMP_VELOCITY
+			has_double_jumped = true
+			
 			
 		if Input.is_action_just_pressed("dash") and can_dash:
 			if not is_on_floor():
