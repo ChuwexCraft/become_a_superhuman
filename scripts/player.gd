@@ -5,6 +5,7 @@ class_name Player
 @onready var coyote_timer : Timer = $CoyoteTimer
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 
+
 #abilities
 @export var acquired_dash = false
 @export var acquired_double_jump = false
@@ -15,7 +16,7 @@ const SPEED = 150
 const JUMP_VELOCITY = -250
 const GRAVITY = 700
 const WALL_SLIDE_GRAVITY = 300
-const WALL_JUMP_FORCE = 300
+const WALL_JUMP_FORCE = 200
 
 const DASH_SPEED := 400
 const DASH_DURATION := 0.2
@@ -41,8 +42,11 @@ func _physics_process(delta: float) -> void:
 	if !stun:# Add the gravity.
 		if can_jump == false and is_on_floor():
 			can_jump = true
-		if is_on_floor() or is_on_wall():
+		if is_on_floor():
 			has_air_dashed = false
+			can_dash = true
+			dash_cooldown_timer = 0.0
+		if is_on_wall():
 			if acquired_wall_jump:
 				can_double_jump = true
 				has_double_jumped = false

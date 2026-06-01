@@ -150,6 +150,7 @@ debug_color = Color(0, 0.6, 0, 0.41960785)
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=160607586]
 sprite_frames = SubResource("SpriteFrames_3lops")
-frame_progress = 0.9246834
+autoplay = "default"
+frame_progress = 0.9043482
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

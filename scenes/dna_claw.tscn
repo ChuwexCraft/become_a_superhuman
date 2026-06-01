@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://dw1fxhx26xsxj"]
 
 [ext_resource type="Texture2D" uid="uid://dliyvroyrt0fi" path="res://assets/clawdna.png" id="1_i8g1v"]
+[ext_resource type="Script" uid="uid://doy7ff1yxgv31" path="res://scenes/dna_claw.gd" id="1_pnjbx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ft32a"]
 
 [node name="DnaClaw" type="Area2D" unique_id=1063041865]
+script = ExtResource("1_pnjbx")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1728037373]
 texture = ExtResource("1_i8g1v")
@@ -12,3 +14,15 @@ texture = ExtResource("1_i8g1v")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1999307661]
 position = Vector2(-1, -2)
 shape = SubResource("RectangleShape2D_ft32a")
+
+[node name="Label" type="Label" parent="." unique_id=1433188470]
+visible = false
+texture_filter = 1
+offset_left = -95.0
+offset_top = -74.0
+offset_right = 121.0
+offset_bottom = -25.0
+text = "HANDS MUTATION! 
+WALL JUMP ACQUIRED!"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
