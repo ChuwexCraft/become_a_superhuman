@@ -500,7 +500,7 @@ layer_0/tile_data = PackedInt32Array(2490368, 65537, 3, 2424832, 65537, 3, 23592
 
 [node name="Player" parent="." unique_id=1910559344 instance=ExtResource("3_4nkto")]
 unique_name_in_owner = true
-position = Vector2(2624, 588)
+position = Vector2(2686, 580)
 
 [node name="DnaBolt" parent="." unique_id=1063041865 instance=ExtResource("4_5xbjy")]
 position = Vector2(2656, 600)
@@ -518,6 +518,3 @@ position = Vector2(5258, 615)
 
 [node name="Checkpoint" parent="." unique_id=970275438 instance=ExtResource("6_fcfvj")]
 position = Vector2(2729, 594)
-
-[node name="Checkpoint2" parent="." unique_id=1407704590 instance=ExtResource("6_fcfvj")]
-position = Vector2(5216, 614)
